@@ -1,6 +1,8 @@
 const express = require('express')
 const app = express()
 
+app.use(express.json())
+
 let persons = [
   {
     id: 1,
@@ -24,8 +26,20 @@ let persons = [
   },
 ]
 
+const generateId = () => {
+  return Math.floor(Math.random() * 1e9)
+}
+
 app.get('/api/persons', (request, response) => {
   response.json(persons)
+})
+
+app.post('/api/persons', (request, response) => {
+  const body = request.body
+
+  body.id = generateId()
+  persons = persons.concat(body)
+  response.json(body)
 })
 
 app.get('/api/persons/:id', (request, response) => {
