@@ -51,9 +51,13 @@ app.post('/api/persons', (request, response) => {
     })
   }
 
-  body.id = generateId()
-  persons = persons.concat(body)
-  response.json(body)
+  const newPerson = {
+    name: body.name,
+    number: body.number,
+    id: generateId(),
+  }
+  persons = persons.concat(newPerson)
+  response.json(newPerson)
 })
 
 app.get('/api/persons/:id', (request, response) => {
