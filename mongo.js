@@ -15,13 +15,21 @@ mongoose.connect(url)
 const personSchema = new mongoose.Schema({ name: String, number: String })
 const Person = mongoose.model('Person', personSchema)
 
-// for now assume that name and number are provided
-const person = new Person({
-  name: process.argv[3],
-  number: process.argv[4],
-})
+if (process.argv.length === 3) {
+  Person.find({}).then((people) => {
+    console.log('phonebook:')
+    people.forEach(({ name, number }) => console.log(`${name} ${number}`))
+    mongoose.connection.close()
+  })
+} else {
+  // for now assume that name and number are provided
+  const person = new Person({
+    name: process.argv[3],
+    number: process.argv[4],
+  })
 
-person.save().then(({ name, number }) => {
-  console.log(`added ${name} number ${number} to phonebook`)
-  mongoose.connection.close()
-})
+  person.save().then(({ name, number }) => {
+    console.log(`added ${name} number ${number} to phonebook`)
+    mongoose.connection.close()
+  })
+}
