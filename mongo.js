@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-if (process.argv.length < 3) {
+if (process.argv.length !== 3 && process.argv.length !== 5) {
   console.log('Usage:')
   console.log('Show all entries: node mongo.js <password>')
   console.log('Add and entry"    node mongo.js <password> <name> <number>')
@@ -22,7 +22,6 @@ if (process.argv.length === 3) {
     mongoose.connection.close()
   })
 } else {
-  // for now assume that name and number are provided
   const person = new Person({
     name: process.argv[3],
     number: process.argv[4],
