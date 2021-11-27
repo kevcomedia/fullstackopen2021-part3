@@ -96,10 +96,14 @@ app.delete('/api/persons/:id', (request, response, next) => {
     .catch((error) => next(error))
 })
 
-app.get('/info', (request, response) => {
-  response.send(`
-    <p>Phonebook has info for ${persons.length} people</p>
-    <p>${new Date().toString()}</p>`)
+app.get('/info', (request, response, next) => {
+  Person.count({})
+    .then((count) => {
+      response.send(`
+        <p>Phonebook has info for ${count} people</p>
+        <p>${new Date().toString()}</p>`)
+    })
+    .catch((error) => next(error))
 })
 
 app.use((error, request, response, next) => {
