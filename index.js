@@ -70,25 +70,27 @@ app.get('/api/persons/:id', (request, response) => {
   }
 })
 
-app.delete('/api/persons/:id', (request, response) => {
+app.delete('/api/persons/:id', (request, response, next) => {
   Person.findByIdAndRemove(request.params.id)
     .then((result) => {
       console.log('deleted:', result)
       response.status(204).end()
     })
-    .catch((error) => {
-      if (error.name === 'CastError') {
-        response.status(400).send({ error: 'malformatted id' })
-      } else {
-        console.error(error)
-      }
-    })
+    .catch((error) => next(error))
 })
 
 app.get('/info', (request, response) => {
   response.send(`
     <p>Phonebook has info for ${persons.length} people</p>
     <p>${new Date().toString()}</p>`)
+})
+
+app.use((error, request, response, next) => {
+  if (error.name === 'CastError') {
+    response.status(400).send({ error: 'malformatted id' })
+  } else {
+    next(error)
+  }
 })
 
 const PORT = process.env.PORT || 3001
