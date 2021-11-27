@@ -71,10 +71,18 @@ app.get('/api/persons/:id', (request, response) => {
 })
 
 app.delete('/api/persons/:id', (request, response) => {
-  const id = Number(request.params.id)
-
-  persons = persons.filter((p) => p.id !== id)
-  response.status(204).end()
+  Person.findByIdAndRemove(request.params.id)
+    .then((result) => {
+      console.log('deleted:', result)
+      response.status(204).end()
+    })
+    .catch((error) => {
+      if (error.name === 'CastError') {
+        response.status(400).send({ error: 'malformatted id' })
+      } else {
+        console.error(error)
+      }
+    })
 })
 
 app.get('/info', (request, response) => {
