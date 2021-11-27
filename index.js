@@ -35,10 +35,6 @@ let persons = [
   },
 ]
 
-const generateId = () => {
-  return Math.floor(Math.random() * 1e9)
-}
-
 app.get('/api/persons', (request, response) => {
   Person.find({}).then((persons) => {
     response.json(persons)
