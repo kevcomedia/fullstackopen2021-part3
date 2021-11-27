@@ -70,6 +70,22 @@ app.get('/api/persons/:id', (request, response) => {
   }
 })
 
+app.put('/api/persons/:id', (request, response, next) => {
+  const { body } = request
+  const { number } = body
+
+  if (!number) {
+    return response.status(400).send({ error: 'missing number' })
+  }
+
+  Person.findByIdAndUpdate(request.params.id, { number }, { new: true })
+    .then((updatedPerson) => {
+      console.log('updated:', updatedPerson)
+      response.json(updatedPerson)
+    })
+    .catch((error) => next(error))
+})
+
 app.delete('/api/persons/:id', (request, response, next) => {
   Person.findByIdAndRemove(request.params.id)
     .then((result) => {
