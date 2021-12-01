@@ -76,7 +76,11 @@ app.put('/api/persons/:id', (request, response, next) => {
     return response.status(400).send({ error: 'missing number' })
   }
 
-  Person.findByIdAndUpdate(request.params.id, { number }, { new: true })
+  Person.findByIdAndUpdate(
+    request.params.id,
+    { number },
+    { new: true, runValidators: true }
+  )
     .then((updatedPerson) => {
       console.log('updated:', updatedPerson)
       response.json(updatedPerson)
