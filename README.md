@@ -1,6 +1,9 @@
 # fullstackopen-part3
 
-Link to application: <https://stormy-river-02963.herokuapp.com/info>
+Links to application:
+
+- <https://stormy-river-02963.herokuapp.com>
+- <https://stormy-river-02963.herokuapp.com/info>
 
 ## API
 
