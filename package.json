@@ -7,6 +7,7 @@
     "start": "node index.js",
     "dev": "nodemon index.js",
     "build:ui": "rm -rf build && cd ../fullstackopen2021-part2/phonebook && npm run build --prod && cd - && cp -r ../fullstackopen2021-part2/phonebook/build .",
+    "lint": "eslint .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Kev Comedia",
